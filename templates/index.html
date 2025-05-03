@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI To-Do List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Section for Adding Tasks -->
+        <div class="left-section">
+            <h1>Smart AI To-Do Prioritizer</h1>
+            <form method="POST">
+                <textarea name="tasks" placeholder="Enter your tasks, one per line..."></textarea>
+                <div class="button-group">
+                    <button type="submit">Prioritize</button>
+                    <button type="submit" name="reset" value="1" class="reset-btn">Reset All</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Section for Displaying Tasks -->
+        <div class="right-section">
+            <!-- Tasks Ordered by Time Added -->
+            <div class="task-time">
+                <h2>Tasks by Time Added</h2>
+                <ul>
+                    {% for task in tasks %}
+                    <li>
+                        <span>{{ task.name }}</span>
+                        <span class="score">Score: {{ task.score }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Tasks Ordered by Priority -->
+            <div class="task-priority">
+                <h2>Tasks by Priority</h2>
+                <ul>
+                    {% for task in tasks|sort(attribute='score', reverse=True) %}
+                    <li>
+                        <span>{{ task.name }}</span>
+                        <span class="score">Score: {{ task.score }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
